@@ -1,0 +1,74 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+#include "nbc.h"
+using namespace std;
+//Constructor
+
+//Public Methods
+//Implement train
+void NBClassifier::train(string words, int ans)
+{
+  prime();
+  if(ans == 0)
+    {
+      badNum = badNum + 1;
+    }
+  else
+    {
+      goodNum = goodNum + 1;
+    }
+  totNum = totNum + 1;
+  goodProb = goodNum / totNum;
+  badProb = badNum / totNum;
+  //Parse in words
+  string item;
+  //search vector for word
+  bool found = false;
+  //if word is in vector, add to its total and adjust its probabilities
+  //Otherwise, make a new Word and put it in the vector
+}
+
+//Implement test
+int NBClassifier::test(string words)
+{
+  prime();
+  //Parse in each word
+  string item;
+  float g = goodProb;
+  float b = badProb;
+  //search vector for word
+  for(int i = 0; i < words.size(); ++i)
+    {
+      if(item == words.at(i).value)
+	{
+	  g = g * words.at(i).gp;
+	  b = b * words.at(i).bp;
+	}
+    }
+
+  //once all words have been parsed, determine if positive or negative
+  if(g > b)
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+//Private Methods
+float NBClassifier::getProb()
+{
+  goodProb = goodNum / totNum;
+  badProb = badNum / totNum;
+}
+
+void NBClassifier::prime()
+{
+  for(int i = 0; i< words.size(); ++i)
+    {
+      words.at(i).changed = false;
+    }
+}
